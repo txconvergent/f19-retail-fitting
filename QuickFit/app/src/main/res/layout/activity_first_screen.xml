@@ -6,4 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".FirstScreen">
 
+    <Button
+        android:id="@+id/checkInBtn"
+        android:layout_width="365dp"
+        android:layout_height="260dp"
+        android:text="Check In"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.276" />
+
+    <Button
+        android:id="@+id/checkOutBtn"
+        android:layout_width="361dp"
+        android:layout_height="240dp"
+        android:text="Check Out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.76" />
 </android.support.constraint.ConstraintLayout>
