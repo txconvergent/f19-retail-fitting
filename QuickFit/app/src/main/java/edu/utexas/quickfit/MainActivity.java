@@ -19,11 +19,11 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 public class MainActivity extends AppCompatActivity {
 
-    final int SEND_SMS_PERMISSION_REQUEST_CODE = 0;
+    final int SEND_SMS_PERMISSION_REQUEST_CODE = 1;
 
     EditText number;
     String message;
-    String phoneNo;
+    Button send;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final boolean messagePermission = checkPermission(Manifest.permission.SEND_SMS);
         //Runs check in queue process
         checkInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,15 +56,30 @@ public class MainActivity extends AppCompatActivity {
 //                    //send Email method
 //                }
 //                if(!phoneOrEmail.isChecked()) {
+                    number = findViewById(R.id.inputNumber);
+                    String phoneNumber = number.toString();
+                    message = "Thank you for checking in";
+                    send = findViewById(R.id.checkMeInButton);
+                    send.setEnabled(true);
+                    try{
+                        if(messagePermission){
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+                        }
+                    } catch(Exception e){
+                        Toast.makeText(getApplicationContext(),
+                                "failed",
+                                Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
 
-                phoneNo = findViewById(R.id.inputNumber).toString();
-                message = "Thank you for checking in";
-                sendSMS();
+
                 }
 //            }
         });
 
     }
+
 
     //Gets name inputted in name text box, if nothing is entered, returns "Customer"
     private String getName(){
@@ -80,39 +96,9 @@ public class MainActivity extends AppCompatActivity {
         return userInfo;
     }
 
-    private void sendSMS(){
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.SEND_SMS)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.SEND_SMS},
-                        SEND_SMS_PERMISSION_REQUEST_CODE);
-            }
-        }
+    public boolean checkPermission(String permission){
+        int check = ContextCompat.checkSelfPermission(this, permission);
+        return (check == PackageManager.PERMISSION_GRANTED);
     }
-
-    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case SEND_SMS_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage(phoneNo, null, message, null, null);
-                    Toast.makeText(getApplicationContext(), "SMS sent.",
-                            Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
-        }
-
-    }
-
-
 }
 
