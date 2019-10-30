@@ -17,14 +17,12 @@ public class CheckOutScreen extends AppCompatActivity {
 
         checkout = (Button) findViewById(R.id.checkoutButton);
         checkout.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
-                openThankYou();
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(getApplicationContext(), ThankYou.class );
+                startActivity(startIntent);
             }
         });
     }
 
-    public void openThankYou(){
-        Intent intent = new Intent(this, ThankYou.class);
-        startActivity(intent);
-    }
 }
