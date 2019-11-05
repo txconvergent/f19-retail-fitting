@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //                if(!phoneOrEmail.isChecked()) {
 
-                number = findViewById(R.id.inputNumber);
+                phoneNo = findViewById(R.id.inputNumber).toString();
                 message = "Thank you for checking in";
                 sendSMS();
                 }
@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendSMS(){
-        this.phoneNo = number.toString();
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.SEND_SMS)
                 != PackageManager.PERMISSION_GRANTED) {
