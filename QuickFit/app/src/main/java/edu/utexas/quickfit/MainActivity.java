@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 //                    //send Email method
 //                }
 //                if(!phoneOrEmail.isChecked()) {
+                    sendMail();
                     number = findViewById(R.id.inputNumber);
                     String phoneNumber = number.toString();
                     message = "Thank you for checking in";
@@ -80,8 +81,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void sendMail() {
+        String email = getUserInfo();
+        String message = getName() + ", here is your room!";
+        String subject = "Fitting Room Queue Confirmation";
 
-    //Gets name inputted in name text box, if nothing is entered, returns "Customer"
+        //sends Mail
+        JavaMailAPI javaMailAPI = new JavaMailAPI(this, email, subject, message);
+
+        javaMailAPI.execute();
+    }
+
+        //Gets name inputted in name text box, if nothing is entered, returns "Customer"
     private String getName(){
         EditText nameText = findViewById(R.id.nameEditText);
         String name = nameText.getText().toString();
