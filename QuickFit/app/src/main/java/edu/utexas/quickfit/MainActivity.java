@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     EditText number;
     String message;
+    String phoneNo;
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,21 +72,43 @@ public class MainActivity extends AppCompatActivity {
         javaMailAPI.execute();
     }
 
-    private void sendText(){
-        number = findViewById(R.id.inputNumber);
-        String phoneNumber = number.toString();
-        message = "Thank you for checking in";
-        try{
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 
-        } catch(Exception e){
-            Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
+    private void sendText(){
+        //sets the message and the phone number to send the message to
+        number = findViewById(R.id.inputNumber);
+        phoneNo = number.toString();
+        message = "Thank you for checking in";
+
+        //check if the device has SMS permissions enabled
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.SEND_SMS},
+                        MY_PERMISSIONS_REQUEST_SEND_SMS);
+            }
         }
     }
 
-        //Gets name inputted in name text box, if nothing is entered, returns "Customer"
+    // called when SMS permissions are enabled
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // sends the SMS with SMSManager API
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(phoneNo, null, message, null, null);
+                } else {
+                    Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+    //Gets name inputted in name text box, if nothing is entered, returns "Customer"
     private String getName(){
         EditText nameText = findViewById(R.id.nameEditText);
         String name = nameText.getText().toString();
