@@ -15,16 +15,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 public class MainActivity extends AppCompatActivity {
 
-    final int SEND_SMS_PERMISSION_REQUEST_CODE = 1;
 
     EditText number;
     String message;
-    Button send;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,37 +42,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final boolean messagePermission = checkPermission(Manifest.permission.SEND_SMS);
         //Runs check in queue process
         checkInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             //We will add send text message/email methods here
             public void onClick(View v){
-//                if(phoneOrEmail.isChecked()){
-//                    //send Email method
-//                }
-//                if(!phoneOrEmail.isChecked()) {
+                if(phoneOrEmail.isChecked()){
                     sendMail();
-                    number = findViewById(R.id.inputNumber);
-                    String phoneNumber = number.toString();
-                    message = "Thank you for checking in";
-                    send = findViewById(R.id.checkMeInButton);
-                    send.setEnabled(true);
-                    try{
-                        if(messagePermission){
-                            SmsManager smsManager = SmsManager.getDefault();
-                            smsManager.sendTextMessage(phoneNumber, null, message, null, null);
-                        }
-                    } catch(Exception e){
-                        Toast.makeText(getApplicationContext(),
-                                "failed",
-                                Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
-
-
                 }
-//            }
+                if(!phoneOrEmail.isChecked()) {
+                    sendText();
+                }
+            }
         });
 
     }
@@ -90,6 +67,20 @@ public class MainActivity extends AppCompatActivity {
         JavaMailAPI javaMailAPI = new JavaMailAPI(this, email, subject, message);
 
         javaMailAPI.execute();
+    }
+
+    private void sendText(){
+        number = findViewById(R.id.inputNumber);
+        String phoneNumber = number.toString();
+        message = "Thank you for checking in";
+        try{
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+
+        } catch(Exception e){
+            Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 
         //Gets name inputted in name text box, if nothing is entered, returns "Customer"
@@ -107,9 +98,5 @@ public class MainActivity extends AppCompatActivity {
         return userInfo;
     }
 
-    public boolean checkPermission(String permission){
-        int check = ContextCompat.checkSelfPermission(this, permission);
-        return (check == PackageManager.PERMISSION_GRANTED);
-    }
 }
 
