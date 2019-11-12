@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     EditText number;
-    String message;
+    String message = "Thank you for checking in";
     String phoneNo;
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +50,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             //We will add send text message/email methods here
             public void onClick(View v){
-                if(phoneOrEmail.isChecked()){
-                    sendMail();
-                }
-                if(!phoneOrEmail.isChecked()) {
+           //     if(phoneOrEmail.isChecked()){
+           //         sendMail();
+           //     }
+           //     if(!phoneOrEmail.isChecked()) {
                     sendText();
-                }
+           //     }
             }
         });
 
@@ -74,22 +74,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void sendText(){
-        //sets the message and the phone number to send the message to
+        //sets the phone number to send the message to
         number = findViewById(R.id.inputNumber);
         phoneNo = number.toString();
-        message = "Thank you for checking in";
 
         //check if the device has SMS permissions enabled
-        if (ContextCompat.checkSelfPermission(this,
+        if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.SEND_SMS)
                 != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
-            } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.SEND_SMS},
                         MY_PERMISSIONS_REQUEST_SEND_SMS);
-            }
         }
+        else{
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, message, null, null);
+        }
+
     }
 
     // called when SMS permissions are enabled
