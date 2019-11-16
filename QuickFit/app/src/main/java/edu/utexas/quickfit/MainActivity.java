@@ -65,15 +65,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             //We will add send text message/email methods here
             public void onClick(View v) {
-                if (phoneOrEmail.isChecked()) {
+
+                String phoneNum =  number.getText().toString();
+                if (phoneOrEmail.isChecked() && contactInfoSet.add(phoneNum)) {
                     sendMail();
                 }
-                if (!phoneOrEmail.isChecked()) {
+                if (!phoneOrEmail.isChecked() && contactInfoSet.add(phoneNum)) {
                     sendText();
                 }
 
                 position++;
-                String phoneNum =  number.getText().toString();
 
                 if (contactInfoSet.add(phoneNum)) {
                     peopleOrderedList.add(phoneNum);
