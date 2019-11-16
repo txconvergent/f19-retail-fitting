@@ -1,12 +1,15 @@
 package edu.utexas.quickfit;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -37,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     ((TextView)findViewById(R.id.phoneEmailTitle)).setText("Email Address:");
-                    ((TextView)findViewById(R.id.inputNumber)).setHint("johndoe@email.com");
+                    ((TextView)findViewById(R.id.inputPhoneNumber)).setHint("johndoe@email.com");
                 } else {
                     ((TextView)findViewById(R.id.phoneEmailTitle)).setText("Phone Number:");
-                    ((TextView)findViewById(R.id.inputNumber)).setHint("(XXX) XXX-XXXX");
+                    ((TextView)findViewById(R.id.inputPhoneNumber)).setHint("(XXX) XXX-XXXX");
                 }
             }
         });
@@ -75,10 +78,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendText(){
         //sets the phone number to send the message to
-        number = findViewById(R.id.inputNumber);
-        phoneNo = number.toString();
+        number = findViewById(R.id.inputPhoneNumber);
+        phoneNo = number.getText().toString();
 
-        //check if the device has SMS permissions enabled
+        // turn on permissions
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.SEND_SMS)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.SEND_SMS},
                         MY_PERMISSIONS_REQUEST_SEND_SMS);
         }
+        // send text if permissions enabled
         else{
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNo, null, message, null, null);
@@ -98,12 +102,10 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_SEND_SMS: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     // sends the SMS with SMSManager API
                     SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage(phoneNo, null, message, null, null);
                 } else {
-                    Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getUserInfo() {
-        EditText userInfoText = findViewById(R.id.inputNumber);
+        EditText userInfoText = findViewById(R.id.inputPhoneNumber);
         String userInfo = userInfoText.getText().toString();
         return userInfo;
     }
