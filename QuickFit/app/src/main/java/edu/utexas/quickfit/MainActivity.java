@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     String message = "Thank you for checking in";
     String phoneNo;
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
+    HashSet<String> noDuplicates = new HashSet<>();
+    List<String> queue = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +51,26 @@ public class MainActivity extends AppCompatActivity {
         checkInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             //We will add send text message/email methods here
-            public void onClick(View v){
-                if(phoneOrEmail.isChecked()){
-                    sendMail();
+            public void onClick(View v) {
+                phoneNo = number.getText().toString();
+                if(noDuplicates.add(phoneNo)){
+                    if(phoneOrEmail.isChecked()) {
+                        sendMail();
+                    } else {
+                        sendText();
+                    }
+                    queue.add(phoneNo);
+                    Toast.makeText(MainActivity.this, "You are number " + queue.size() + " in line!", Toast.LENGTH_LONG * 3).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Already added to queue!", Toast.LENGTH_LONG * 3).show();
                 }
-                if(!phoneOrEmail.isChecked()) {
-                    sendText();
-               }
+
+//                if(phoneOrEmail.isChecked() && noDuplicates.add(phoneNo)){
+//                    sendMail();
+//                }
+//                if(!phoneOrEmail.isChecked() && noDuplicates.add(phoneNo)) {
+//                    sendText();
+//               }
             }
         });
 
