@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    TextView placeTxt;
     EditText number;
     String message = "Thank you for checking in";
     String phoneNo;
@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        placeTxt = findViewById(R.id.placeTxt);
 
         final Button checkInButton = findViewById(R.id.checkMeInButton);
         final Switch phoneOrEmail = findViewById(R.id.phoneOrEmail);
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!phoneOrEmail.isChecked()) {
                     sendText();
                 }
+                Toast.makeText(MainActivity.this, "You are Xth in line!", Toast.LENGTH_LONG * 3).show();
             }
         });
 
