@@ -18,10 +18,19 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class MainActivity extends AppCompatActivity {
 
     TextView placeTxt;
+    Set<String> contactInfoSet = new HashSet<>();
+    ArrayList<String> peopleOrderedList = new ArrayList<>();
+
+    int position = 0;
+
     EditText number;
     String message = "Thank you for checking in";
     String phoneNo;
@@ -33,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         placeTxt = findViewById(R.id.placeTxt);
+        number = findViewById(R.id.inputPhoneNumber);
 
         final Button checkInButton = findViewById(R.id.checkMeInButton);
         final Switch phoneOrEmail = findViewById(R.id.phoneOrEmail);
@@ -54,14 +64,24 @@ public class MainActivity extends AppCompatActivity {
         checkInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             //We will add send text message/email methods here
-            public void onClick(View v){
-                if(phoneOrEmail.isChecked()){
+            public void onClick(View v) {
+                if (phoneOrEmail.isChecked()) {
                     sendMail();
                 }
-                if(!phoneOrEmail.isChecked()) {
+                if (!phoneOrEmail.isChecked()) {
                     sendText();
                 }
-                Toast.makeText(MainActivity.this, "You are Xth in line!", Toast.LENGTH_LONG * 3).show();
+
+                position++;
+                String phoneNum =  number.getText().toString();
+
+                if (contactInfoSet.add(phoneNum)) {
+                    peopleOrderedList.add(phoneNum);
+
+                    Toast.makeText(MainActivity.this, "You are number " + position + " in line!", Toast.LENGTH_LONG * 3).show();
+                } else{
+                    Toast.makeText(MainActivity.this, "You have already been checked in!", Toast.LENGTH_LONG * 3).show();
+                }
             }
         });
 
@@ -81,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendText(){
         //sets the phone number to send the message to
-        number = findViewById(R.id.inputPhoneNumber);
+
         phoneNo = number.getText().toString();
 
         // turn on permissions
