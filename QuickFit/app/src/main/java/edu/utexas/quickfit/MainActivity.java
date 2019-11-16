@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 if (phoneOrEmail.isChecked() && contactInfoSet.add(phoneNum)) {
                     sendMail();
                 }
-                if (!phoneOrEmail.isChecked() && contactInfoSet.add(phoneNum)) {
+                if (!phoneOrEmail.isChecked()) {
                     sendText();
                 }
 
