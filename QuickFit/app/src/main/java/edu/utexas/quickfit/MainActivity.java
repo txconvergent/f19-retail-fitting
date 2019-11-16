@@ -53,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             //We will add send text message/email methods here
             public void onClick(View v){
-           //     if(phoneOrEmail.isChecked()){
-           //         sendMail();
-           //     }
-           //     if(!phoneOrEmail.isChecked()) {
+                if(phoneOrEmail.isChecked()){
+                    sendMail();
+                }
+                if(!phoneOrEmail.isChecked()) {
                     sendText();
-           //     }
+                }
             }
         });
 
