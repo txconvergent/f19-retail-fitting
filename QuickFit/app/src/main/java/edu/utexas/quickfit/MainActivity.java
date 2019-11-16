@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     ((TextView)findViewById(R.id.phoneEmailTitle)).setText("Email Address:");
-                    ((TextView)findViewById(R.id.inputPhoneNumber)).setHint("johndoe@email.com");
+                    ((TextView)findViewById(R.id.inputNumber)).setHint("johndoe@email.com");
                 } else {
                     ((TextView)findViewById(R.id.phoneEmailTitle)).setText("Phone Number:");
-                    ((TextView)findViewById(R.id.inputPhoneNumber)).setHint("(XXX) XXX-XXXX");
+                    ((TextView)findViewById(R.id.inputNumber)).setHint("(XXX) XXX-XXXX");
                 }
             }
         });
@@ -51,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             //We will add send text message/email methods here
             public void onClick(View v){
-                if(phoneOrEmail.isChecked()){
-                    sendMail();
-                }
-                if(!phoneOrEmail.isChecked()) {
+           //     if(phoneOrEmail.isChecked()){
+           //         sendMail();
+           //     }
+           //     if(!phoneOrEmail.isChecked()) {
                     sendText();
-               }
+           //    }
             }
         });
 
@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendText(){
         //sets the phone number to send the message to
-        number = findViewById(R.id.inputPhoneNumber);
-        phoneNo = number.getText().toString();
+        number = findViewById(R.id.inputNumber);
+        phoneNo = number.toString();
 
         //check if the device has SMS permissions enabled
         if (ActivityCompat.checkSelfPermission(this,
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getUserInfo() {
-        EditText userInfoText = findViewById(R.id.inputPhoneNumber);
+        EditText userInfoText = findViewById(R.id.inputNumber);
         String userInfo = userInfoText.getText().toString();
         return userInfo;
     }
