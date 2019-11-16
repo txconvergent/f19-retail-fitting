@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 public class SMSReceiver extends BroadcastReceiver {
     private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
-
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(SMS_RECEIVED)) {
@@ -30,10 +29,13 @@ public class SMSReceiver extends BroadcastReceiver {
                 }
                 String sender = messages[0].getOriginatingAddress();
                 String message = sb.toString();
+                System.out.println(sender + " " + message);
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                 // prevent any other broadcast receivers from receiving broadcast
                 // abortBroadcast();
             }
         }
     }
+
+
 }

@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     String message = "Thank you for checking in";
     String phoneNo;
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
-    private List<String> queue = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         String userInfo = userInfoText.getText().toString();
         return userInfo;
     }
+
 
 
 
