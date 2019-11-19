@@ -29,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
     Set<String> contactInfoSet = new HashSet<>();
     ArrayList<String> peopleOrderedList = new ArrayList<>();
 
+
     int position = 0;
 
     EditText number;
     String message = "Thank you for checking in";
     String phoneNo;
+    String receivedText;
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
 
     @Override
