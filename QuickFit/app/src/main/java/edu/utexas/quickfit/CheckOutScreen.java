@@ -24,7 +24,8 @@ public class CheckOutScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String input  = ((EditText)findViewById(R.id.Room_Number_Input)).getText().toString();
-                // use 'input' to clear customer info from server.
+                // use 'input' to clear customer info from data structure used in check in.
+
                 Intent startIntent = new Intent(getApplicationContext(), ThankYou.class );
                 startActivity(startIntent);
             }
