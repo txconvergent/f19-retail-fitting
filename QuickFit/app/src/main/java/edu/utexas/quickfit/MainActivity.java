@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -25,6 +24,7 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+
     TextView placeTxt;
     Set<String> contactInfoSet = new HashSet<>();
     ArrayList<String> peopleOrderedList = new ArrayList<>();
@@ -37,11 +37,15 @@ public class MainActivity extends AppCompatActivity {
     String phoneNo;
     String receivedText;
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
+    private int MY_PERMISSIONS_REQUEST_SMS_RECEIVE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.RECEIVE_SMS},
+                MY_PERMISSIONS_REQUEST_SMS_RECEIVE);
 
         placeTxt = findViewById(R.id.placeTxt);
         number = findViewById(R.id.inputPhoneNumber);
@@ -134,6 +138,12 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                 }
             }
+        }
+        //Permissions for receiving SMS messages.
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_PERMISSIONS_REQUEST_SMS_RECEIVE) {
+            // YES!!
+            Log.i("TAG", "MY_PERMISSIONS_REQUEST_SMS_RECEIVE --> YES");
         }
     }
 
