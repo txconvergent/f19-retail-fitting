@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     Set<String> contactInfoSet = new HashSet<>();
     ArrayList<String> peopleOrderedList = new ArrayList<>();
 
-
     int position = 0;
 
     EditText number;
