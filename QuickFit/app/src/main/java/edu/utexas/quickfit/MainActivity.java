@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> peopleOrderedList = new ArrayList<>();
     private CustomerDB customerDB;
 
-
     int position = 0;
 
     EditText number;
