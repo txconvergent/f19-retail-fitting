@@ -24,10 +24,10 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
-
     TextView placeTxt;
     Set<String> contactInfoSet = new HashSet<>();
     ArrayList<String> peopleOrderedList = new ArrayList<>();
+    private CustomerDB customerDB;
 
 
     int position = 0;
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
         final Button checkInButton = findViewById(R.id.checkMeInButton);
         final Switch phoneOrEmail = findViewById(R.id.phoneOrEmail);
+        customerDB = CustomerDB.getInstance();
+        final Person customer = new Person();
 
         //Updates input boxes for user choice of phone number or email
         phoneOrEmail.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -75,9 +77,11 @@ public class MainActivity extends AppCompatActivity {
                 String phoneNum =  number.getText().toString();
                 if (phoneOrEmail.isChecked() && contactInfoSet.add(phoneNum)) {
                     sendMail();
+                    customer.setEmail(phoneNum);
                 }
                 if (!phoneOrEmail.isChecked()) {
                     sendText();
+                    customer.setPhoneNum(phoneNum);
                 }
 
                 position++;
@@ -92,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        customer.setName(getName());
+        customerDB.checkin(customer);
     }
 
     private void sendMail() {
