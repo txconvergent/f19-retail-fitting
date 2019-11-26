@@ -96,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         customer.setName(getName());
+        EditText viewById = findViewById(R.id.editText);
+        int customer_num_clothes = Integer.parseInt(viewById.getText().toString());
+        customer.setNumClothes(customer_num_clothes);
         customerDB.checkin(customer);
     }
 
@@ -166,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         String userInfo = userInfoText.getText().toString();
         return userInfo;
     }
+    
 
 }
 
