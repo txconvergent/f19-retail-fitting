@@ -17,15 +17,20 @@ public class CustomerDB {
         rooms = new Person[5]; // num of rooms NOT dynamic
     }
 
-    public void checkin(Person p)
+    public int checkin(Person p)
     {
         for(int i = 0; i < rooms.length; i++){
+
+            /* Available room. Place customer in room immediately. */
             if(rooms[i] == null){
                 rooms[i] = p;
-                return;
+                return i;
             }
         }
+
+        /* No available rooms. Customer added to queue. */
         line.add(p);
+        return -1;
     }
 
     public void checkout(int roomNum)

@@ -7,6 +7,7 @@ public class Person {
     String email;
     int numClothes;
     int roomNum;
+    int pos;
 
     public Person(){
         this.name = null;
@@ -14,6 +15,7 @@ public class Person {
         this.email = null;
         this.numClothes = -1;
         this.roomNum = -1;
+        this.pos = -1;
     }
 
     public Person(String name, String phoneNum, String email, int numClothes){
@@ -22,6 +24,7 @@ public class Person {
         this.email = email;
         this.numClothes = numClothes;
         this.roomNum = -1;
+        this.pos = -1;
     }
 
     public String getName(){
@@ -62,5 +65,13 @@ public class Person {
 
     public void setRoomNum(int roomNum){
         this.roomNum = roomNum;
+    }
+
+    public int getPos(){
+        return pos;
+    }
+
+    public void setPos(int pos){
+        this.pos = pos;
     }
 }

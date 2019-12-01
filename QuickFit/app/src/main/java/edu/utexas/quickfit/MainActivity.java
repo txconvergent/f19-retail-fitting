@@ -67,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        customer.setName(getName());
+        EditText viewById = findViewById(R.id.editText);
+        int customer_num_clothes = Integer.parseInt(viewById.getText().toString());
+        customer.setNumClothes(customer_num_clothes);
+
         //Runs check in queue process
         checkInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
                 position++;
 
+                customerDB.checkin(customer);
+
+
                 if (contactInfoSet.add(phoneNum)) {
                     peopleOrderedList.add(phoneNum);
 
@@ -95,11 +103,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        customer.setName(getName());
-        EditText viewById = findViewById(R.id.editText);
-        int customer_num_clothes = Integer.parseInt(viewById.getText().toString());
-        customer.setNumClothes(customer_num_clothes);
-        customerDB.checkin(customer);
+
+
     }
 
     private void sendMail() {
