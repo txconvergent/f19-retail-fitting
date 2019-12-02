@@ -24,13 +24,10 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
-
     TextView placeTxt;
     Set<String> contactInfoSet = new HashSet<>();
     ArrayList<String> peopleOrderedList = new ArrayList<>();
-
-
-    int position = 0;
+    private CustomerDB customerDB;
 
     EditText number;
     String message = "Thank you for checking in";
@@ -52,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         final Button checkInButton = findViewById(R.id.checkMeInButton);
         final Switch phoneOrEmail = findViewById(R.id.phoneOrEmail);
+        customerDB = CustomerDB.getInstance();
+        final Person customer = new Person();
 
         //Updates input boxes for user choice of phone number or email
         phoneOrEmail.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -66,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        customer.setName(getName());
+        EditText viewById = findViewById(R.id.editText);
+        int customer_num_clothes = Integer.parseInt(viewById.getText().toString());
+        customer.setNumClothes(customer_num_clothes);
+
         //Runs check in queue process
         checkInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,22 +79,32 @@ public class MainActivity extends AppCompatActivity {
                 String phoneNum =  number.getText().toString();
                 if (phoneOrEmail.isChecked() && contactInfoSet.add(phoneNum)) {
                     sendMail();
+                    customer.setEmail(phoneNum);
                 }
                 if (!phoneOrEmail.isChecked()) {
                     sendText();
+                    customer.setPhoneNum(phoneNum);
                 }
 
-                position++;
+                int roomNum = customerDB.checkin(customer);
 
                 if (contactInfoSet.add(phoneNum)) {
                     peopleOrderedList.add(phoneNum);
 
-                    Toast.makeText(MainActivity.this, "You are number " + position + " in line!", Toast.LENGTH_LONG * 3).show();
+                    /* Customer added to queue. */
+                    if(roomNum == -1)
+                        Toast.makeText(MainActivity.this, "You are number " + customer.getPos() + " in line!", Toast.LENGTH_LONG * 3).show();
+                    /* Customer immediately put in available fitting room. */
+                    else
+                        Toast.makeText(MainActivity.this, "Your room number is " + roomNum, Toast.LENGTH_LONG * 3).show();
+
                 } else{
                     Toast.makeText(MainActivity.this, "You have already been checked in!", Toast.LENGTH_LONG * 3).show();
                 }
             }
         });
+
+
 
     }
 
@@ -161,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         String userInfo = userInfoText.getText().toString();
         return userInfo;
     }
+    
 
 }
 
