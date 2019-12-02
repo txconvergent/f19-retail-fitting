@@ -15,6 +15,7 @@ public class CustomerDB {
         rooms = new Person[5]; // num of rooms NOT dynamic
     }
 
+    /* Returns room number customer is placed in if available. */
     public int checkin(Person p)
     {
         for(int i = 0; i < rooms.length; i++){
@@ -22,6 +23,7 @@ public class CustomerDB {
             /* Available room. Place customer in room immediately. */
             if(rooms[i] == null){
                 rooms[i] = p;
+                p.setRoomNum(i);
                 return i;
             }
         }
@@ -32,14 +34,12 @@ public class CustomerDB {
         return -1;
     }
 
-    public void checkout(int roomNum)
+    public Person checkout(int roomNum)
     {
-        if(!queue.isEmpty()){
-            Person nextP = queue.remove(0);
-            rooms[roomNum] = nextP;
-        }
-        else
-            rooms[roomNum] = null;
+        rooms[roomNum] = null;
+        if(!queue.isEmpty())
+            return queue.remove(0);
+        return null;
     }
 
     /* To share 'database' across multiple files. */
