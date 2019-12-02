@@ -1,19 +1,17 @@
 package edu.utexas.quickfit;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerDB {
 
     private static CustomerDB instance = null;
-    Queue<Person> line;
+    List<Person> queue;
     Person[] rooms;
 
     public CustomerDB()
     {
-        line = new LinkedList<>();
+        queue = new ArrayList<>();
         rooms = new Person[5]; // num of rooms NOT dynamic
     }
 
@@ -29,14 +27,15 @@ public class CustomerDB {
         }
 
         /* No available rooms. Customer added to queue. */
-        line.add(p);
+        queue.add(p);
+        p.setPos(queue.indexOf(p));
         return -1;
     }
 
     public void checkout(int roomNum)
     {
-        if(!line.isEmpty()){
-            Person nextP = line.poll();
+        if(!queue.isEmpty()){
+            Person nextP = queue.remove(0);
             rooms[roomNum] = nextP;
         }
         else
