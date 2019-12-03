@@ -22,22 +22,26 @@
         android:layout_alignBottom="@+id/checkoutButton"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="143dp"
-        android:layout_marginRight="143dp"
+        android:layout_marginEnd="118dp"
+        android:layout_marginRight="118dp"
         android:layout_marginBottom="167dp"
-        android:text="Your Room Number:" />
+        android:text="Your Room Number:"
+        android:textColor="#F5F2F2"
+        android:textColorHint="#00FFFFFF" />
 
     <EditText
         android:id="@+id/Room_Number_Input"
-        android:layout_width="wrap_content"
+        android:layout_width="129dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/checkoutButton"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="99dp"
-        android:layout_marginRight="99dp"
-        android:layout_marginBottom="37dp"
-        android:ems="10" />
+        android:layout_marginEnd="109dp"
+        android:layout_marginRight="109dp"
+        android:layout_marginBottom="39dp"
+        android:ems="10"
+        android:hint="Room Number"
+        android:textColorHint="#FFFFFF" />
 
 
 </RelativeLayout>

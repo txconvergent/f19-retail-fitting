@@ -12,13 +12,13 @@ public class CustomerDB {
     public CustomerDB()
     {
         queue = new ArrayList<>();
-        rooms = new Person[5]; // num of rooms NOT dynamic
+        rooms = new Person[2]; // num of rooms NOT dynamic
     }
 
     /* Returns room number customer is placed in if available. */
     public int checkin(Person p)
     {
-        for(int i = 0; i < rooms.length; i++){
+        for(int i = 1; i < rooms.length; i++){
 
             /* Available room. Place customer in room immediately. */
             if(rooms[i] == null){
@@ -30,7 +30,7 @@ public class CustomerDB {
 
         /* No available rooms. Customer added to queue. */
         queue.add(p);
-        p.setPos(queue.indexOf(p));
+        p.setPos(queue.indexOf(p) + 1);
         return -1;
     }
 

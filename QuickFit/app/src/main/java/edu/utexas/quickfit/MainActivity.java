@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private CustomerDB customerDB;
 
     EditText number;
-    String message = "Thank you for checking in";
+    String message = "Thank you for checking in! :)";
     String phoneNo;
     String receivedText;
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
@@ -67,8 +67,14 @@ public class MainActivity extends AppCompatActivity {
 
         customer.setName(getName());
         EditText viewById = findViewById(R.id.editText);
-        int customer_num_clothes = Integer.parseInt(viewById.getText().toString());
-        customer.setNumClothes(customer_num_clothes);
+        //
+        if(viewById.getText().toString().length() > 0) {
+            //
+            int customer_num_clothes = Integer.parseInt(viewById.getText().toString());
+            customer.setNumClothes(customer_num_clothes);
+            //
+        }
+        //
 
         //Runs check in queue process
         checkInButton.setOnClickListener(new View.OnClickListener() {
@@ -96,11 +102,15 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "You are number " + customer.getPos() + " in line!", Toast.LENGTH_LONG * 3).show();
                     /* Customer immediately put in available fitting room. */
                     else
-                        Toast.makeText(MainActivity.this, "Your room number is " + roomNum, Toast.LENGTH_LONG * 3).show();
+                        Toast.makeText(MainActivity.this, "Your room number is " + roomNum + "!", Toast.LENGTH_LONG * 3).show();
 
                 } else{
                     Toast.makeText(MainActivity.this, "You have already been checked in!", Toast.LENGTH_LONG * 3).show();
                 }
+
+                ((TextView)findViewById(R.id.inputPhoneNumber)).setText("");
+                ((TextView)findViewById(R.id.nameEditText)).setText("");
+
             }
         });
 

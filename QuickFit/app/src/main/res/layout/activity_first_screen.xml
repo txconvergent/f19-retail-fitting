@@ -8,25 +8,27 @@
 
     <Button
         android:id="@+id/checkInBtn"
-        android:layout_width="365dp"
-        android:layout_height="260dp"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:text="Check In"
+        android:textColor="#2d2e30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276" />
+        app:layout_constraintVertical_bias="0.209" />
 
     <Button
         android:id="@+id/checkOutBtn"
-        android:layout_width="361dp"
-        android:layout_height="240dp"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:text="Check Out"
+        android:textColor="#2d2e30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.841" />
 </android.support.constraint.ConstraintLayout>
